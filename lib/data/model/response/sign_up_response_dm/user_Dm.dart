@@ -1,3 +1,5 @@
+import 'package:e_commerce_app/domain/entities/sign_up_repository_entitiy/user_entity.dart';
+
 class UserDM {
   String? name;
   String? email;
@@ -16,4 +18,8 @@ class UserDM {
         'email': email,
         'role': role,
       };
+
+  UserEntity toUserEntity() {
+    return UserEntity(email: email, name: name);
+  }
 }

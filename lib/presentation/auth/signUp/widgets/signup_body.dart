@@ -1,7 +1,7 @@
 import 'package:e_commerce_app/presentation/utils/constants.dart';
 import 'package:e_commerce_app/presentation/utils/custom_button.dart';
 import 'package:e_commerce_app/presentation/utils/custom_text_field.dart';
-import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -168,7 +168,7 @@ class _SignUpBodyState extends State<SignUpBody> {
                       if (value == null || value.trim().isEmpty) {
                         return "confirm password field is required";
                       }
-                      if (value == widget.passwordController.text) {
+                      if (value != widget.passwordController.text) {
                         return "confirm password is not identical";
                       }
                       if (value.length < 6 || value.length > 30) {

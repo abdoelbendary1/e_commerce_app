@@ -15,7 +15,8 @@ class SignUpUseCase {
     String password,
     String rePassword,
     String phone,
-  ) {
-    return authRepository.signUp(name, email, password, rePassword, phone);
+  ) async {
+    return await authRepository.signUp(
+        name, email, password, rePassword, phone);
   }
 }
