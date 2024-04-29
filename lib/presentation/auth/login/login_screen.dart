@@ -1,7 +1,8 @@
 import 'package:e_commerce_app/presentation/auth/login/cubit/login_state.dart';
 import 'package:e_commerce_app/presentation/auth/login/cubit/login_view_model.dart';
 import 'package:e_commerce_app/presentation/auth/login/widgets/login_body.dart';
-import 'package:e_commerce_app/presentation/auth/signUp/sign_up._screen.dart';
+import 'package:e_commerce_app/presentation/home_screen/home_screen_view.dart';
+
 import 'package:e_commerce_app/presentation/utils/dialogUtils.dart';
 import 'package:e_commerce_app/presentation/utils/theme/app_colors.dart';
 import 'package:flutter/material.dart';
@@ -41,6 +42,7 @@ class LoginScreen extends StatelessWidget {
             formKey: loginViewModel.formKey,
             buttonFunction: () {
               loginViewModel.login();
+              Navigator.pushNamed(context, HomeScreenView.routeName);
             },
             navigateToSignUp: () {
               loginViewModel.navigateToSignUpScreen(context);
