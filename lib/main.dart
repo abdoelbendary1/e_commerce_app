@@ -1,7 +1,10 @@
 import 'package:device_preview/device_preview.dart';
 import 'package:e_commerce_app/presentation/auth/login/login_screen.dart';
 import 'package:e_commerce_app/presentation/auth/signUp/sign_up._screen.dart';
+import 'package:e_commerce_app/presentation/cart/cart_screen.dart';
 import 'package:e_commerce_app/presentation/home/home_screen.dart';
+import 'package:e_commerce_app/presentation/home_screen/home_screen_view.dart';
+import 'package:e_commerce_app/presentation/product_details/product_details_view.dart';
 import 'package:e_commerce_app/presentation/splash/splash_screen.dart';
 import 'package:e_commerce_app/presentation/utils/theme/app_theme.dart';
 
@@ -38,7 +41,9 @@ class MyApp extends StatelessWidget {
           SplashScreen.routeName: (context) => const SplashScreen(),
           LoginScreen.routeName: (context) => LoginScreen(),
           SignUpScreen.routeName: (context) => SignUpScreen(),
-          HomeScreen.routeName: (context) => const HomeScreen(),
+          HomeScreenView.routeName: (context) => HomeScreenView(),
+          ProductDetailsView.routeName: (context) => ProductDetailsView(),
+          CartScreen.routeName: (context) => CartScreen(),
         },
         theme: AppTheme.mainTheme,
       ),

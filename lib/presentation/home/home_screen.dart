@@ -1,3 +1,4 @@
+import 'package:e_commerce_app/presentation/home/widgets/home_screen_body.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -6,10 +7,8 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(
-        color: Colors.blue,
-      ),
+    return const Scaffold(
+      body: HomeScreenBody(),
     );
   }
 }

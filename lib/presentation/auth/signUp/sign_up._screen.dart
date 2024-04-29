@@ -1,4 +1,5 @@
 import 'package:e_commerce_app/domain/di.dart';
+import 'package:e_commerce_app/presentation/auth/signUp/cubit/is_obsecure_cubit.dart';
 import 'package:e_commerce_app/presentation/auth/signUp/cubit/signup_state.dart';
 import 'package:e_commerce_app/presentation/auth/signUp/cubit/signup_view_model.dart';
 import 'package:e_commerce_app/presentation/auth/signUp/widgets/signup_body.dart';
@@ -12,6 +13,7 @@ class SignUpScreen extends StatelessWidget {
   static const String routeName = "signup_screen";
   SignUpViewModel signUpViewModel =
       SignUpViewModel(signUpUseCase: injectSignUpUseCase());
+  IsObsecureCubit isObsecureCubit = IsObsecureCubit();
 
   @override
   Widget build(BuildContext context) {
@@ -41,8 +43,11 @@ class SignUpScreen extends StatelessWidget {
             emailController: signUpViewModel.emailController,
             passwordController: signUpViewModel.passwordController,
             confirPasswordController: signUpViewModel.confirmPasswordController,
-            isObsecure: signUpViewModel.isObsecure,
             buttonFunction: signUpViewModel.signUp,
+            passIsObsecureFunction: isObsecureCubit.changeObsecurePassword,
+            confirmPassIsObsecureFunction:
+                isObsecureCubit.changeObsecureConfirmPassword,
+            isObsecureCubit: isObsecureCubit,
           )),
     );
   }
