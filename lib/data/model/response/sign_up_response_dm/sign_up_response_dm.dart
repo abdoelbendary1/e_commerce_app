@@ -1,5 +1,6 @@
-import 'package:e_commerce_app/data/model/response/sign_up_response_dm/response_error.dart';
-
+import 'package:e_commerce_app/data/model/response/sign_up_response_dm/errors.dart';
+import 'package:e_commerce_app/domain/entities/sign_up_repository_entitiy/sign_up_repository_entitiy.dart';
+import '';
 import 'user_Dm.dart';
 
 class SignUpResponseDm {
@@ -27,6 +28,12 @@ class SignUpResponseDm {
         'message': message,
         'user': user?.toJson(),
         'token': token,
-        'errors': errors,
+        'errors': errors?.toJson(),
       };
+  SignUpRepositoryEntitiy toSignUpRepositoryEntitiy() {
+    return SignUpRepositoryEntitiy(
+      user: user?.toUserEntity(),
+      token: token,
+    );
+  }
 }

@@ -1,28 +1,3 @@
-class ResponseError {
-  String? message;
-  Errors? errors;
-
-  ResponseError({this.message, this.errors});
-
-  ResponseError.fromJson(Map<String, dynamic> json) {
-    if (json["message"] is String) {
-      message = json["message"];
-    }
-    if (json["errors"] is Map) {
-      errors = json["errors"] == null ? null : Errors.fromJson(json["errors"]);
-    }
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data["message"] = message;
-    if (errors != null) {
-      data["errors"] = errors?.toJson();
-    }
-    return data;
-  }
-}
-
 class Errors {
   String? value;
   String? msg;

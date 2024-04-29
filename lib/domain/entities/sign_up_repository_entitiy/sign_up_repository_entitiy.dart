@@ -1,4 +1,4 @@
-import 'user.dart';
+import 'user_entity.dart';
 
 class SignUpRepositoryEntitiy {
   String? message;

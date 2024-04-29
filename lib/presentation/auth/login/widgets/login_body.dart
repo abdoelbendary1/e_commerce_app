@@ -5,16 +5,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class LoginBody extends StatefulWidget {
-  LoginBody(
-      {super.key,
-      required this.emailController,
-      required this.passwordController,
-      required this.formKey,
-      required this.buttonFunction});
+  LoginBody({
+    super.key,
+    required this.emailController,
+    required this.passwordController,
+    required this.formKey,
+    required this.buttonFunction,
+    required this.navigateToSignUp,
+  });
   late GlobalKey formKey;
   late TextEditingController emailController;
   late TextEditingController passwordController;
   late void Function()? buttonFunction;
+  late void Function()? navigateToSignUp;
   bool isObsecure = true;
 
   @override
@@ -69,7 +72,7 @@ class _LoginBodyState extends State<LoginBody> {
                   CustomTextField(
                     controller: widget.emailController,
                     fieldName: "E-Mail",
-                    hintText: "please enter your e-mail",
+                    hintText: "enter your e-mail",
                     validator: (value) {
                       if (value == null || value.trim().isEmpty) {
                         return "e-mail field is required";
@@ -105,7 +108,7 @@ class _LoginBodyState extends State<LoginBody> {
                     ),
                     controller: widget.passwordController,
                     fieldName: "Password",
-                    hintText: "please enter your password",
+                    hintText: "enter your password",
                     validator: (value) {
                       if (value == null || value.trim().isEmpty) {
                         return "e-mail field is required";
@@ -148,7 +151,7 @@ class _LoginBodyState extends State<LoginBody> {
                           style: Theme.of(context).textTheme.titleMedium,
                         ),
                         TextButton(
-                          onPressed: () {},
+                          onPressed: widget.navigateToSignUp,
                           child: Text(
                             "create account",
                             style: Theme.of(context).textTheme.titleMedium,

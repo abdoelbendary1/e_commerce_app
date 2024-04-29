@@ -4,15 +4,21 @@ import 'package:e_commerce_app/presentation/auth/signUp/sign_up._screen.dart';
 import 'package:e_commerce_app/presentation/home/home_screen.dart';
 import 'package:e_commerce_app/presentation/splash/splash_screen.dart';
 import 'package:e_commerce_app/presentation/utils/theme/app_theme.dart';
-import 'package:flutter/foundation.dart';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-void main() => runApp(
-      DevicePreview(
-        builder: (context) => const MyApp(), // Wrap your app
-      ),
-    );
+import 'domain/my_observer.dart';
+
+void main() {
+  Bloc.observer = MyBlocObserver();
+  runApp(
+    DevicePreview(
+      builder: (context) => const MyApp(), // Wrap your app
+    ),
+  );
+}
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
