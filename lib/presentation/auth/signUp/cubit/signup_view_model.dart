@@ -17,7 +17,6 @@ class SignUpViewModel extends Cubit<SignUpState> {
       TextEditingController(text: "1234567");
   TextEditingController confirmPasswordController =
       TextEditingController(text: "1234567");
-  
 
   SignUpUseCase signUpUseCase;
 

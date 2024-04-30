@@ -2,16 +2,13 @@ import 'package:device_preview/device_preview.dart';
 import 'package:e_commerce_app/presentation/auth/login/login_screen.dart';
 import 'package:e_commerce_app/presentation/auth/signUp/sign_up._screen.dart';
 import 'package:e_commerce_app/presentation/cart/cart_screen.dart';
-import 'package:e_commerce_app/presentation/home/home_screen.dart';
 import 'package:e_commerce_app/presentation/home_screen/home_screen_view.dart';
 import 'package:e_commerce_app/presentation/product_details/product_details_view.dart';
 import 'package:e_commerce_app/presentation/splash/splash_screen.dart';
 import 'package:e_commerce_app/presentation/utils/theme/app_theme.dart';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
 import 'domain/my_observer.dart';
 
 void main() {

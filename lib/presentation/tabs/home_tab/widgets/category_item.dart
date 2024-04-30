@@ -1,12 +1,17 @@
-import 'package:e_commerce_app/presentation/utils/my_assets.dart';
-import 'package:e_commerce_app/presentation/utils/theme/app_colors.dart';
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
-
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class CategoryOrBrandItem extends StatelessWidget {
-  //todo: categoryOrBrand model
+import 'package:e_commerce_app/domain/entities/category_response_entity/category_response_entity.dart';
+import 'package:e_commerce_app/presentation/utils/my_assets.dart';
+import 'package:e_commerce_app/presentation/utils/theme/app_colors.dart';
 
+class CategoryOrBrandItem extends StatelessWidget {
+  CategoryOrBrandsEntity categoryOrBrandsEntity;
+  CategoryOrBrandItem({
+    super.key,
+    required this.categoryOrBrandsEntity,
+  });
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -14,7 +19,7 @@ class CategoryOrBrandItem extends StatelessWidget {
         Expanded(
           flex: 8,
           child: CircleAvatar(
-            backgroundImage: AssetImage(MyAssets.announcement1),
+            backgroundImage: NetworkImage(categoryOrBrandsEntity.image ?? ""),
             radius: 50.r,
           ),
         ),
@@ -24,7 +29,7 @@ class CategoryOrBrandItem extends StatelessWidget {
         Expanded(
           flex: 2,
           child: Text(
-            'name',
+            categoryOrBrandsEntity.name ?? "Category",
             textWidthBasis: TextWidthBasis.longestLine,
             textAlign: TextAlign.center,
             style: Theme.of(context).textTheme.titleMedium!.copyWith(

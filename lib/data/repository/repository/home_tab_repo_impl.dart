@@ -1,0 +1,24 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:dartz/dartz.dart';
+import 'package:e_commerce_app/domain/entities/brands_response_entity/brand_response_entitiy.dart';
+
+import 'package:e_commerce_app/domain/entities/category_response_entity/category_response_entity.dart';
+import 'package:e_commerce_app/domain/entities/failures/failures.dart';
+import 'package:e_commerce_app/domain/repository/data_source/home_tab_remote_data_source.dart';
+import 'package:e_commerce_app/domain/repository/repository/home_tab_repository.dart';
+
+class HomeTabRepositoryImpl extends HomeTabRepository {
+  HomeTabRemoteDataSource homeTabRemoteDataSource;
+  HomeTabRepositoryImpl({
+    required this.homeTabRemoteDataSource,
+  });
+  @override
+  Future<Either<Failures, CategoryOrBrandsResponseEntity>> getAllCategories() {
+    return homeTabRemoteDataSource.getAllCategories();
+  }
+
+  @override
+  Future<Either<Failures, CategoryOrBrandsResponseEntity>> getAllBrands() {
+    return homeTabRemoteDataSource.getAllBrands();
+  }
+}
