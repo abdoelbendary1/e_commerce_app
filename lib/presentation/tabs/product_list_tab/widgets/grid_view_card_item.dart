@@ -1,11 +1,17 @@
+import 'package:e_commerce_app/domain/entities/products_response_entity/product_response_entity.dart';
+import 'package:e_commerce_app/presentation/tabs/product_list_tab/cubit/product_tab_view_model_cubit.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:e_commerce_app/presentation/utils/my_assets.dart';
 import 'package:e_commerce_app/presentation/utils/theme/app_colors.dart';
-import 'package:flutter/material.dart';
-
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class GridViewCardItem extends StatelessWidget {
   bool isWishlisted = false;
+  ProductEntity product;
+  GridViewCardItem({
+    super.key,
+    required this.product,
+  });
 
   //todo: product
   @override
@@ -27,8 +33,8 @@ class GridViewCardItem extends StatelessWidget {
             children: [
               ClipRRect(
                 borderRadius: BorderRadius.circular(15.r),
-                child: Image.asset(
-                  MyAssets.announcement1,
+                child: Image.network(
+                  product.imageCover ?? "",
                   fit: BoxFit.cover,
                   width: 191.w,
                   height: 128.h,
@@ -60,8 +66,8 @@ class GridViewCardItem extends StatelessWidget {
           Padding(
             padding: EdgeInsets.only(left: 8.w),
             child: Text(
-              "title",
-              maxLines: 2,
+              product.title ?? "",
+              maxLines: 1,
               overflow: TextOverflow.ellipsis,
               style: Theme.of(context).textTheme.titleSmall!.copyWith(
                     fontSize: 14.sp,
@@ -71,14 +77,14 @@ class GridViewCardItem extends StatelessWidget {
             ),
           ),
           SizedBox(
-            height: 7.h,
+            height: 5.h,
           ),
           Padding(
             padding: EdgeInsets.only(left: 8.w),
             child: Row(
               children: [
                 Text(
-                  "EGP ",
+                  "EGP ${product.price} ",
                   maxLines: 1,
                   style: Theme.of(context).textTheme.titleSmall!.copyWith(
                         fontSize: 14.sp,
@@ -93,14 +99,14 @@ class GridViewCardItem extends StatelessWidget {
             ),
           ),
           SizedBox(
-            height: 7.h,
+            height: 3.h,
           ),
           Padding(
             padding: EdgeInsets.only(left: 8.0.w, right: 8.w),
             child: Row(
               children: [
                 Text(
-                  "Review ()",
+                  "Review (${product.ratingsAverage})",
                   maxLines: 1,
                   style: Theme.of(context).textTheme.titleSmall!.copyWith(
                         fontSize: 14.sp,
@@ -120,6 +126,8 @@ class GridViewCardItem extends StatelessWidget {
                 InkWell(
                   onTap: () {
                     //todo: add to cart
+                    ProductTabViewModel.get(context)
+                        .addToCart(productID: product.id ?? "");
                   },
                   splashColor: Colors.transparent,
                   child: Icon(

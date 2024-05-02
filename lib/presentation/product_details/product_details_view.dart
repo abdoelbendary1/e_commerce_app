@@ -1,3 +1,4 @@
+import 'package:e_commerce_app/domain/entities/products_response_entity/product_response_entity.dart';
 import 'package:e_commerce_app/presentation/utils/my_assets.dart';
 import 'package:e_commerce_app/presentation/utils/theme/app_colors.dart';
 import 'package:flutter/material.dart';
@@ -11,6 +12,9 @@ class ProductDetailsView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var productArgs =
+        ModalRoute.of(context)!.settings.arguments as ProductEntity;
+
     return Scaffold(
       appBar: AppBar(
         surfaceTintColor: Colors.transparent,
@@ -28,12 +32,12 @@ class ProductDetailsView extends StatelessWidget {
           IconButton(
             padding: EdgeInsets.zero,
             onPressed: () {},
-            icon: Icon(Icons.search),
+            icon: const Icon(Icons.search),
           ),
           IconButton(
             padding: EdgeInsets.zero,
             onPressed: () {},
-            icon: Icon(Icons.shopping_cart_outlined),
+            icon: const Icon(Icons.shopping_cart_outlined),
           ),
         ],
       ),
@@ -56,14 +60,14 @@ class ProductDetailsView extends StatelessWidget {
                       indicatorBottomPadding: 20.h,
                       autoPlayInterval: 3000,
                       isLoop: true,
-                      children: [
-                        Image.asset(
-                          MyAssets.announcement1,
-                          fit: BoxFit.cover,
-                          height: 300.h,
-                          width: double.infinity,
-                        )
-                      ]),
+                      children: productArgs.images!
+                          .map((url) => Image.network(
+                                url,
+                                fit: BoxFit.cover,
+                                height: 300.h,
+                                width: double.infinity,
+                              ))
+                          .toList()),
                 ),
               ),
               SizedBox(
@@ -74,7 +78,7 @@ class ProductDetailsView extends StatelessWidget {
                 children: [
                   Expanded(
                     child: Text(
-                      'title',
+                      productArgs.title ?? "title",
                       style: Theme.of(context).textTheme.titleMedium!.copyWith(
                             fontSize: 18.sp,
                             color: AppColors.darkPrimaryColor,
@@ -83,7 +87,7 @@ class ProductDetailsView extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    "EGP price",
+                    "EGP ${productArgs.price.toString()}",
                     style: TextStyle(
                       fontSize: 18.sp,
                       color: AppColors.darkPrimaryColor,
@@ -111,7 +115,7 @@ class ProductDetailsView extends StatelessWidget {
                           ),
                         ),
                         child: Text(
-                          "Sold : ",
+                          "Sold : ${productArgs.sold.toString()} ",
                           style:
                               Theme.of(context).textTheme.titleSmall!.copyWith(
                                     color: AppColors.darkPrimaryColor,
@@ -128,7 +132,7 @@ class ProductDetailsView extends StatelessWidget {
                         width: 4.w,
                       ),
                       Text(
-                        "ratingsAverage",
+                        productArgs.ratingsAverage.toString(),
                         style: Theme.of(context).textTheme.titleSmall!.copyWith(
                               color: AppColors.darkPrimaryColor,
                               fontSize: 18.sp,
@@ -192,7 +196,7 @@ class ProductDetailsView extends StatelessWidget {
                 height: 10.h,
               ),
               ReadMoreText(
-                'Description',
+                productArgs.description ?? "",
                 trimLines: 3,
                 trimMode: TrimMode.Line,
                 style: Theme.of(context).textTheme.titleSmall!.copyWith(
@@ -260,7 +264,10 @@ class ProductDetailsView extends StatelessWidget {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                          const Icon(Icons.add_shopping_cart_outlined),
+                          const Icon(
+                            Icons.add_shopping_cart_outlined,
+                            color: AppColors.whiteColor,
+                          ),
                           Text("Add to cart",
                               style: Theme.of(context).textTheme.titleMedium),
                         ],

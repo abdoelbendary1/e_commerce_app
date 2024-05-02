@@ -12,7 +12,7 @@ class SignUpViewModel extends Cubit<SignUpState> {
   TextEditingController mobileNoController =
       TextEditingController(text: "01064326250");
   TextEditingController emailController =
-      TextEditingController(text: "abdo12@gmail.com");
+      TextEditingController(text: "abdo125@gmail.com");
   TextEditingController passwordController =
       TextEditingController(text: "1234567");
   TextEditingController confirmPasswordController =

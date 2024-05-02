@@ -1,3 +1,4 @@
+import 'package:e_commerce_app/presentation/auth/signUp/sign_up._screen.dart';
 import 'package:e_commerce_app/presentation/utils/constants.dart';
 import 'package:e_commerce_app/presentation/utils/custom_button.dart';
 import 'package:e_commerce_app/presentation/utils/custom_text_field.dart';
@@ -11,13 +12,12 @@ class LoginBody extends StatefulWidget {
     required this.passwordController,
     required this.formKey,
     required this.buttonFunction,
-    required this.navigateToSignUp,
   });
   late GlobalKey formKey;
   late TextEditingController emailController;
   late TextEditingController passwordController;
   late void Function()? buttonFunction;
-  late void Function()? navigateToSignUp;
+
   bool isObsecure = true;
 
   @override
@@ -151,7 +151,10 @@ class _LoginBodyState extends State<LoginBody> {
                           style: Theme.of(context).textTheme.titleMedium,
                         ),
                         TextButton(
-                          onPressed: widget.navigateToSignUp,
+                          onPressed: () {
+                            Navigator.pushNamed(
+                                context, SignUpScreen.routeName);
+                          },
                           child: Text(
                             "create account",
                             style: Theme.of(context).textTheme.titleMedium,

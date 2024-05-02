@@ -5,23 +5,39 @@ import 'package:e_commerce_app/presentation/cart/cart_screen.dart';
 import 'package:e_commerce_app/presentation/home_screen/home_screen_view.dart';
 import 'package:e_commerce_app/presentation/product_details/product_details_view.dart';
 import 'package:e_commerce_app/presentation/splash/splash_screen.dart';
+import 'package:e_commerce_app/presentation/utils/shared_prefrence.dart';
 import 'package:e_commerce_app/presentation/utils/theme/app_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'domain/my_observer.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  //auto login
+  await SharedPrefrence.init();
+  var token = SharedPrefrence.getData(key: "token");
+  late String route;
+  if (token == null) {
+    route = SplashScreen.routeName;
+  } else {
+    route = HomeScreenView.routeName;
+  }
+
   Bloc.observer = MyBlocObserver();
+
   runApp(
     DevicePreview(
-      builder: (context) => const MyApp(), // Wrap your app
+      builder: (context) => MyApp(
+        route: route,
+      ),
     ),
   );
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  MyApp({super.key, required this.route});
+  late String route;
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +49,7 @@ class MyApp extends StatelessWidget {
         locale: DevicePreview.locale(context),
         builder: DevicePreview.appBuilder,
         debugShowCheckedModeBanner: false,
-        initialRoute: SplashScreen.routeName,
+        initialRoute: route,
         routes: {
           SplashScreen.routeName: (context) => const SplashScreen(),
           LoginScreen.routeName: (context) => LoginScreen(),
