@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import 'package:e_commerce_app/domain/entities/category_response_entity/category_response_entity.dart';
+import 'package:e_commerce_app/domain/entities/category_or_brand_response_entity/category_or_brands_response_entity.dart';
 import 'package:e_commerce_app/presentation/utils/my_assets.dart';
 import 'package:e_commerce_app/presentation/utils/theme/app_colors.dart';
 

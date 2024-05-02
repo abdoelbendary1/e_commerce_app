@@ -1,9 +1,9 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'package:e_commerce_app/domain/entities/brands_response_entity/brand_response_entitiy.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import 'package:e_commerce_app/domain/entities/category_response_entity/category_response_entity.dart';
+import 'package:e_commerce_app/domain/entities/category_or_brand_response_entity/category_or_brands_response_entity.dart';
 
 import 'category_item.dart';
 

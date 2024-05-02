@@ -4,6 +4,7 @@ import 'package:e_commerce_app/presentation/auth/login/widgets/login_body.dart';
 import 'package:e_commerce_app/presentation/home_screen/home_screen_view.dart';
 
 import 'package:e_commerce_app/presentation/utils/dialogUtils.dart';
+import 'package:e_commerce_app/presentation/utils/shared_prefrence.dart';
 import 'package:e_commerce_app/presentation/utils/theme/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -32,6 +33,16 @@ class LoginScreen extends StatelessWidget {
           DialogUtils.showMessage(
               context: context,
               message: state.loginRepositoryEntity.message ?? "");
+
+          SharedPrefrence.saveData(
+            key: "token",
+            value: state.loginRepositoryEntity.token,
+          );
+          SharedPrefrence.saveData(
+            key: "username",
+            value: state.loginRepositoryEntity.user!.name,
+          );
+          Navigator.pushReplacementNamed(context, HomeScreenView.routeName);
         }
       },
       child: Scaffold(
@@ -42,10 +53,6 @@ class LoginScreen extends StatelessWidget {
             formKey: loginViewModel.formKey,
             buttonFunction: () {
               loginViewModel.login();
-              Navigator.pushNamed(context, HomeScreenView.routeName);
-            },
-            navigateToSignUp: () {
-              loginViewModel.navigateToSignUpScreen(context);
             },
           )),
     );

@@ -1,4 +1,4 @@
-import 'package:e_commerce_app/domain/entities/category_response_entity/category_response_entity.dart';
+import 'package:e_commerce_app/domain/entities/category_or_brand_response_entity/category_or_brands_response_entity.dart';
 
 class CategoryOrBrandsResponseDm extends CategoryOrBrandsResponseEntity {
   Metadata? metadata;
@@ -15,6 +15,12 @@ class CategoryOrBrandsResponseDm extends CategoryOrBrandsResponseEntity {
     if (json["results"] is int) {
       results = json["results"];
     }
+    if (json["message"] is String) {
+      results = json["message"];
+    }
+    if (json["statusMsg"] is String) {
+      results = json["statusMsg"];
+    }
     if (json["metadata"] is Map) {
       metadata =
           json["metadata"] == null ? null : Metadata.fromJson(json["metadata"]);
@@ -22,7 +28,9 @@ class CategoryOrBrandsResponseDm extends CategoryOrBrandsResponseEntity {
     if (json["data"] is List) {
       data = json["data"] == null
           ? null
-          : (json["data"] as List).map((e) => CategoryOrBrandsDM.fromJson(e)).toList();
+          : (json["data"] as List)
+              .map((e) => CategoryOrBrandsDM.fromJson(e))
+              .toList();
     }
   }
 }
