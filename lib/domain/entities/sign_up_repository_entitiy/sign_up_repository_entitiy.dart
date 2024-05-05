@@ -1,9 +1,18 @@
-import 'user.dart';
-
-class SignUpRepositoryEntitiy {
+class SignUpRepoEntity {
+  bool? status;
   String? message;
-  UserEntity? user;
+  Data? data;
+
+  SignUpRepoEntity({this.status, this.message, this.data});
+}
+
+class Data {
+  String? name;
+  String? email;
+  String? phone;
+  int? id;
+  String? image;
   String? token;
 
-  SignUpRepositoryEntitiy({this.message, this.user, this.token});
+  Data({this.name, this.email, this.phone, this.id, this.image, this.token});
 }

@@ -1,11 +1,14 @@
+import 'package:e_commerce_app/presentation/auth/signUp/cubit/is_obsecure_cubit.dart';
+import 'package:e_commerce_app/presentation/auth/signUp/cubit/is_obsecure_state.dart';
 import 'package:e_commerce_app/presentation/utils/constants.dart';
 import 'package:e_commerce_app/presentation/utils/custom_button.dart';
 import 'package:e_commerce_app/presentation/utils/custom_text_field.dart';
-import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class SignUpBody extends StatefulWidget {
+class SignUpBody extends StatelessWidget {
   SignUpBody({
     super.key,
     required this.formKey,
@@ -16,6 +19,9 @@ class SignUpBody extends StatefulWidget {
     required this.confirPasswordController,
     required this.buttonFunction,
     this.isObsecure = true,
+    required this.passIsObsecureFunction,
+    required this.confirmPassIsObsecureFunction,
+    required this.isObsecureCubit,
   });
   late GlobalKey formKey;
   late TextEditingController fullnameController;
@@ -24,13 +30,11 @@ class SignUpBody extends StatefulWidget {
   late TextEditingController passwordController;
   late TextEditingController confirPasswordController;
   late void Function()? buttonFunction;
+  late void Function()? passIsObsecureFunction;
+  late void Function()? confirmPassIsObsecureFunction;
   late bool isObsecure;
+  late IsObsecureCubit isObsecureCubit;
 
-  @override
-  State<SignUpBody> createState() => _SignUpBodyState();
-}
-
-class _SignUpBodyState extends State<SignUpBody> {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -43,26 +47,22 @@ class _SignUpBodyState extends State<SignUpBody> {
                 top: 91.h, bottom: 20.h, left: 96.w, right: 96.w),
             child: Image.asset(AppAssets.logo),
           ),
-
-          //text
-
           //form
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
             child: Form(
-              key: widget.formKey,
+              key: formKey,
               child: Column(
                 children: [
                   // Full name
                   CustomTextField(
-                    controller: widget.fullnameController,
+                    controller: fullnameController,
                     fieldName: "Full Name",
                     hintText: "enter your full name",
                     validator: (value) {
                       if (value == null || value.trim().isEmpty) {
                         return "Full Name field is required";
                       }
-
                       return null;
                     },
                   ),
@@ -71,7 +71,7 @@ class _SignUpBodyState extends State<SignUpBody> {
                   ),
                   //mobile number
                   CustomTextField(
-                    controller: widget.mobileNoController,
+                    controller: mobileNoController,
                     fieldName: "Mobile Number",
                     hintText: "enter your mobile no.",
                     keyboardType: TextInputType.phone,
@@ -93,7 +93,7 @@ class _SignUpBodyState extends State<SignUpBody> {
 
                   //e-mail
                   CustomTextField(
-                    controller: widget.emailController,
+                    controller: emailController,
                     fieldName: "E-Mail",
                     hintText: "enter your e-mail",
                     validator: (value) {
@@ -113,70 +113,63 @@ class _SignUpBodyState extends State<SignUpBody> {
                     height: 10.h,
                   ),
                   //password
-                  CustomTextField(
-                    suffixIcon: InkWell(
-                      onTap: () {
-                        setState(() {
-                          if (widget.isObsecure == true) {
-                            widget.isObsecure = false;
-                          } else {
-                            widget.isObsecure = true;
+                  BlocBuilder<IsObsecureCubit, IsObsecureState>(
+                    bloc: isObsecureCubit,
+                    builder: (context, state) {
+                      return CustomTextField(
+                        obscure: isObsecureCubit.passIsObsecure,
+                        suffixIcon: InkWell(
+                          onTap: passIsObsecureFunction,
+                          child: Image.asset(isObsecureCubit.passViewIcon),
+                        ),
+                        controller: passwordController,
+                        fieldName: "Password",
+                        hintText: "enter your password",
+                        validator: (value) {
+                          if (value == null || value.trim().isEmpty) {
+                            return "password field is required";
                           }
-                        });
-                      },
-                      child: Image.asset(widget.isObsecure
-                          ? AppAssets.hidePass
-                          : AppAssets.viewPass),
-                    ),
-                    controller: widget.passwordController,
-                    obscure: widget.isObsecure,
-                    fieldName: "Password",
-                    hintText: "enter your password",
-                    validator: (value) {
-                      if (value == null || value.trim().isEmpty) {
-                        return "password field is required";
-                      }
-                      if (value.length < 6 || value.length > 30) {
-                        return "password must be more than 6 char and less than 30 char";
-                      }
-                      return null;
+                          if (value.length < 6 || value.length > 30) {
+                            return "password must be more than 6 char and less than 30 char";
+                          }
+                          return null;
+                        },
+                      );
                     },
                   ),
                   SizedBox(
                     height: 10.h,
-                  ), //re password
-                  CustomTextField(
-                    obscure: widget.isObsecure,
-                    suffixIcon: InkWell(
-                      onTap: () {
-                        setState(() {
-                          if (widget.isObsecure == true) {
-                            widget.isObsecure = false;
-                          } else {
-                            widget.isObsecure = true;
+                  ),
+                  // confirm pass
+                  BlocBuilder<IsObsecureCubit, IsObsecureState>(
+                    bloc: isObsecureCubit,
+                    builder: (context, state) {
+                      return CustomTextField(
+                        obscure: isObsecureCubit.confirmPassIsObsecure,
+                        suffixIcon: InkWell(
+                          onTap: confirmPassIsObsecureFunction,
+                          child:
+                              Image.asset(isObsecureCubit.confirmPassViewIcon),
+                        ),
+                        controller: confirPasswordController,
+                        fieldName: "Confirm password",
+                        hintText: "enter your password",
+                        validator: (value) {
+                          if (value == null || value.trim().isEmpty) {
+                            return "confirm password field is required";
                           }
-                        });
-                      },
-                      child: Image.asset(widget.isObsecure
-                          ? AppAssets.hidePass
-                          : AppAssets.viewPass),
-                    ),
-                    controller: widget.confirPasswordController,
-                    fieldName: "Confirm password",
-                    hintText: "enter your password",
-                    validator: (value) {
-                      if (value == null || value.trim().isEmpty) {
-                        return "confirm password field is required";
-                      }
-                      if (value == widget.passwordController.text) {
-                        return "confirm password is not identical";
-                      }
-                      if (value.length < 6 || value.length > 30) {
-                        return "password must be more than 6 char and less than 30 char";
-                      }
-                      return null;
+                          if (value != passwordController.text) {
+                            return "confirm password is not identical";
+                          }
+                          if (value.length < 6 || value.length > 30) {
+                            return "password must be more than 6 char and less than 30 char";
+                          }
+                          return null;
+                        },
+                      );
                     },
                   ),
+
                   SizedBox(
                     height: 30.h,
                   ),
@@ -188,7 +181,7 @@ class _SignUpBodyState extends State<SignUpBody> {
                     ),
                     child: CustomButton(
                       buttonText: "Sign Up",
-                      buttonFunction: widget.buttonFunction,
+                      buttonFunction: buttonFunction,
                     ),
                   ),
                   SizedBox(

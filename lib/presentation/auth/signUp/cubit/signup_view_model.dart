@@ -1,17 +1,41 @@
+import 'package:e_commerce_app/domain/use_cases/signup_usecase.dart';
 import 'package:e_commerce_app/presentation/auth/signUp/cubit/signup_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class SignUpViewModel extends Cubit<SignUpState> {
-  SignUpViewModel() : super(SignInitialState());
+  SignUpViewModel({required this.signUpUseCase}) : super(SignInitialState());
 
-  GlobalKey formKey = GlobalKey<FormState>();
-  TextEditingController fullnameController = TextEditingController();
-  TextEditingController mobileNoController = TextEditingController();
-  TextEditingController emailController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
-  TextEditingController confirmPasswordController = TextEditingController();
-  late bool isObsecure = true;
+  GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  TextEditingController fullnameController =
+      TextEditingController(text: "abdo");
+  TextEditingController mobileNoController =
+      TextEditingController(text: "01064326251");
+  TextEditingController emailController =
+      TextEditingController(text: "abdo121015@gmail.com");
+  TextEditingController passwordController =
+      TextEditingController(text: "1234567");
+  TextEditingController confirmPasswordController =
+      TextEditingController(text: "1234567");
 
-  void signUp() {}
+  SignUpUseCase signUpUseCase;
+
+  void signUp() async {
+    if (formKey.currentState!.validate()) {
+      emit(SignUpLoadingState());
+      var either = await signUpUseCase.invoke(
+        fullnameController.text,
+        emailController.text,
+        passwordController.text,
+        confirmPasswordController.text,
+        mobileNoController.text,
+      );
+      either.fold((failure) {
+        print(failure.errorMessege);
+        emit(SignUpErrorState(errorMessege: failure.errorMessege));
+      }, (response) {
+        emit(SignUpSuccessState(signUpRepositoryEntitiy: response));
+      });
+    }
+  }
 }
